@@ -15,55 +15,66 @@ datasource db {
 }
 
 model User {
-  id               String       @id @default(uuid())
-  username         String       @unique
-  password         String
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
+  id               String       @id @default(uuid())         @map("id")
+  username         String       @unique                     @map("username")
+  password         String                                     @map("password")
+  createdAt        DateTime     @default(now())              @map("created_at")
+  updatedAt        DateTime     @updatedAt                   @map("updated_at")
+
+  @@map("user")
 }
 
-
 model Project {
-  id               String           @id @default(ulid())
-  name             String           @unique
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
+  id               String           @id @default(ulid())     @map("id")
+  name             String           @unique                  @map("name")
+  createdAt        DateTime         @default(now())          @map("created_at")
+  updatedAt        DateTime         @updatedAt               @map("updated_at")
+
   translationKeys  TranslationKey[]
+
+  @@map("project")
 }
 
 model Locale {
-  id           String        @id @default(uuid())
-  code         String        @unique // e.g., "en-us", "fr-fr", "de-de"
-  name         String        // e.g., "English (United States)", "Français (France)"
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id           String        @id @default(uuid())            @map("id")
+  code         String        @unique                         @map("code")
+  name         String                                       @map("name")
+  createdAt    DateTime      @default(now())                 @map("created_at")
+  updatedAt    DateTime      @updatedAt                      @map("updated_at")
+
   translations Translation[]
+
+  @@map("locale")
 }
 
 model TranslationKey {
-  id               String        @id @default(uuid())
-  keyPath          String        @unique // The full dot-separated key path (e.g., "app.title")
-  projectId        String
+  id               String        @id @default(uuid())        @map("id")
+  keyPath          String        @unique                     @map("key_path")
+  isGroupHeader    Boolean       @default(false)             @map("is_group_header")
+  createdAt        DateTime      @default(now())             @map("created_at")
+  updatedAt        DateTime      @updatedAt                  @map("updated_at")
+
+  projectId        String                                     @map("project_id")
   project          Project       @relation(fields: [projectId], references: [id])
-  isGroupHeader    Boolean       @default(false)
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+
   translations     Translation[]
+
   @@unique([projectId, keyPath])
+  @@map("translation_key")
 }
 
 model Translation {
-  id                 String         @id @default(uuid())
-  value              String?
+  id                 String         @id @default(uuid())     @map("id")
+  value              String?                                    @map("value")
+  createdAt          DateTime       @default(now())             @map("created_at")
+  updatedAt          DateTime       @updatedAt                  @map("updated_at")
 
-  translationKeyId   String
+  translationKeyId   String                                     @map("translation_key_id")
   translationKey     TranslationKey @relation(fields: [translationKeyId], references: [id])
 
-  localeId           String
+  localeId           String                                     @map("locale_id")
   locale             Locale         @relation(fields: [localeId], references: [id])
 
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
-
   @@unique([translationKeyId, localeId])
+  @@map("translation")
 }
