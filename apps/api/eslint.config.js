@@ -1,4 +1,4 @@
-import { config } from "@repo/eslint-config";
+import { configApp } from '@adonisjs/eslint-config'
+import { config } from '@repo/eslint-config/next'
 
-/** @type {import("eslint").Linter.Config} */
-export default config;
+export default configApp(config)
