@@ -4,7 +4,7 @@ import { TranslationTable } from './translation-table'
 import { flattenTranslationObject, mergeTranslationsForTable } from './utils'
 
 const meta: Meta<typeof TranslationTable> = {
-  title: 'Components/TranslationTable',
+  title: 'Components/Translation/TranslationTable',
   component: TranslationTable
 }
 
