@@ -12,19 +12,11 @@
   },
   "packageManager": "pnpm@8.15.6",
   "engines": {
-    "node": ">=18"
-  },
-  "dependencies": {
-    "@tanstack/react-table": "^8.21.3",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.511.0",
-    "storefront": "^0.8.1",
-    "tailwind-merge": "^3.3.0",
-    "tw-animate-css": "^1.3.0"
+    "node": ">=22"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "turbo": "^2.5.3"
   }
 }
