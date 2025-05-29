@@ -31,10 +31,13 @@ importers:
         version: 2.2.1(@adonisjs/core@6.18.0)
       '@adonisjs/lucid':
         specifier: ^21.6.1
-        version: 21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)
+        version: 21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)(luxon@3.6.1)
       '@vinejs/vine':
         specifier: ^3.0.1
         version: 3.0.1
+      luxon:
+        specifier: ^3.6.1
+        version: 3.6.1
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -69,6 +72,9 @@ importers:
       '@swc/core':
         specifier: 1.11.24
         version: 1.11.24
+      '@types/luxon':
+        specifier: ^3.6.2
+        version: 3.6.2
       '@types/node':
         specifier: ^22.15.18
         version: 22.15.23
@@ -327,7 +333,7 @@ packages:
         optional: true
     dependencies:
       '@adonisjs/core': 6.18.0(@adonisjs/assembler@7.8.2)(@vinejs/vine@3.0.1)
-      '@adonisjs/lucid': 21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)
+      '@adonisjs/lucid': 21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)(luxon@3.6.1)
       '@adonisjs/presets': 2.6.4(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)
       '@japa/api-client': 3.1.0(@japa/assert@4.0.1)(@japa/runner@4.2.0)
       '@japa/plugin-adonisjs': 4.0.0(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0)(@japa/runner@4.2.0)
@@ -562,7 +568,7 @@ packages:
       abstract-logging: 2.0.1
       pino: 9.7.0
 
-  /@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1):
+  /@adonisjs/lucid@21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)(luxon@3.6.1):
     resolution: {integrity: sha512-0TLCcPm9GHShJlsDAF5SHilafnvTxW25y5nD3bGJBSMEaNfGXcGRBbnyWoeNs7DsnqMCZ6ociT+0XMcKJWzQrQ==}
     engines: {node: '>=18.16.0'}
     peerDependencies:
@@ -591,6 +597,7 @@ packages:
       kleur: 4.1.5
       knex: 3.1.0
       knex-dynamic-connection: 3.2.0
+      luxon: 3.6.1
       pretty-hrtime: 1.0.3
       qs: 6.14.0
       slash: 5.1.0
@@ -4517,6 +4524,10 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
 
+  /@types/luxon@3.6.2:
+    resolution: {integrity: sha512-R/BdP7OxEMc44l2Ex5lSXHoIXTB2JLNa3y2QISIbr58U/YcsffyQrYW//hZSdrfxrjRZj3GcUoxMPGdO8gSYuw==}
+    dev: true
+
   /@types/mdx@2.0.13:
     resolution: {integrity: sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==}
     dev: true
@@ -8274,6 +8285,11 @@ packages:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
     dependencies:
       react: 19.1.0
+    dev: false
+
+  /luxon@3.6.1:
+    resolution: {integrity: sha512-tJLxrKJhO2ukZ5z0gyjY1zPh3Rh88Ej9P7jNrZiHMUXHae1yvI2imgOZtL1TO8TW6biMMKfTtAOoEJANgtWBMQ==}
+    engines: {node: '>=12'}
     dev: false
 
   /lz-string@1.5.0:
