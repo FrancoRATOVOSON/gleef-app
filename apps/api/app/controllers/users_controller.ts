@@ -3,7 +3,6 @@ import type { HttpContext } from '@adonisjs/core/http'
 import hash from '@adonisjs/core/services/hash'
 
 export default class UsersController {
-
   async register({ request, response }: HttpContext) {
     const { username, password } = request.body()
 
@@ -60,7 +59,7 @@ export default class UsersController {
       })
     }
 
-    const isValid = await hash.verify(user.password,password)
+    const isValid = await hash.verify(user.password, password)
     if (!isValid) {
       return response.status(401).json({
         message: 'Invalid username or password',
