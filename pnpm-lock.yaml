@@ -22,7 +22,7 @@ importers:
     dependencies:
       '@adonisjs/auth':
         specifier: ^9.4.0
-        version: 9.4.0(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@adonisjs/lucid@21.6.1)(@adonisjs/session@7.5.1)(@japa/api-client@3.1.0)(@japa/plugin-adonisjs@4.0.0)
+        version: 9.4.0(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@adonisjs/lucid@21.6.1)(@japa/api-client@3.1.0)(@japa/plugin-adonisjs@4.0.0)
       '@adonisjs/core':
         specifier: ^6.18.0
         version: 6.18.0(@adonisjs/assembler@7.8.2)(@vinejs/vine@3.0.1)
@@ -32,9 +32,6 @@ importers:
       '@adonisjs/lucid':
         specifier: ^21.6.1
         version: 21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)(luxon@3.6.1)
-      '@adonisjs/session':
-        specifier: ^7.5.1
-        version: 7.5.1(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0)
       '@prisma/client':
         specifier: 6.8.2
         version: 6.8.2(prisma@6.8.2)(typescript@5.8.2)
@@ -111,6 +108,9 @@ importers:
       '@radix-ui/react-dropdown-menu':
         specifier: ^2.1.15
         version: 2.1.15(@types/react-dom@19.0.4)(@types/react@19.0.10)(react-dom@19.1.0)(react@19.1.0)
+      '@radix-ui/react-label':
+        specifier: ^2.1.7
+        version: 2.1.7(@types/react-dom@19.0.4)(@types/react@19.0.10)(react-dom@19.1.0)(react@19.1.0)
       '@radix-ui/react-slot':
         specifier: ^1.2.3
         version: 1.2.3(@types/react@19.0.10)(react@19.1.0)
@@ -316,7 +316,7 @@ packages:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  /@adonisjs/auth@9.4.0(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@adonisjs/lucid@21.6.1)(@adonisjs/session@7.5.1)(@japa/api-client@3.1.0)(@japa/plugin-adonisjs@4.0.0):
+  /@adonisjs/auth@9.4.0(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@adonisjs/lucid@21.6.1)(@japa/api-client@3.1.0)(@japa/plugin-adonisjs@4.0.0):
     resolution: {integrity: sha512-dzvnJRKY+RcKUXCRT6ebnlGV0wAfejTSGqS0XbgjB97r6Pww14MhsY89EBr1nSydQzvjdbtIR3EDGbU97BVmbQ==}
     engines: {node: '>=18.16.0'}
     peerDependencies:
@@ -341,7 +341,6 @@ packages:
       '@adonisjs/core': 6.18.0(@adonisjs/assembler@7.8.2)(@vinejs/vine@3.0.1)
       '@adonisjs/lucid': 21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)(luxon@3.6.1)
       '@adonisjs/presets': 2.6.4(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)
-      '@adonisjs/session': 7.5.1(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0)
       '@japa/api-client': 3.1.0(@japa/assert@4.0.1)(@japa/runner@4.2.0)
       '@japa/plugin-adonisjs': 4.0.0(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0)(@japa/runner@4.2.0)
       '@poppinss/utils': 6.9.4
@@ -646,37 +645,6 @@ packages:
     dependencies:
       '@poppinss/colors': 4.1.4
       string-width: 7.2.0
-
-  /@adonisjs/session@7.5.1(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0):
-    resolution: {integrity: sha512-b1E0W/1nnJfAq3Gv8yPywgsxJ7uzzOBJxxulonXI4t1eSdvJzZGNrFScfVLOcjTwlxwrEFA847tULIQxgR4Spw==}
-    engines: {node: '>=18.16.0'}
-    peerDependencies:
-      '@adonisjs/core': ^6.6.0
-      '@adonisjs/redis': ^8.0.1 || ^9.0.0
-      '@aws-sdk/client-dynamodb': ^3.658.0
-      '@aws-sdk/util-dynamodb': ^3.658.0
-      '@japa/api-client': ^2.0.3 || ^3.0.0
-      '@japa/browser-client': ^2.0.3
-      edge.js: ^6.0.2
-    peerDependenciesMeta:
-      '@adonisjs/redis':
-        optional: true
-      '@aws-sdk/client-dynamodb':
-        optional: true
-      '@aws-sdk/util-dynamodb':
-        optional: true
-      '@japa/api-client':
-        optional: true
-      '@japa/browser-client':
-        optional: true
-      edge.js:
-        optional: true
-    dependencies:
-      '@adonisjs/core': 6.18.0(@adonisjs/assembler@7.8.2)(@vinejs/vine@3.0.1)
-      '@japa/api-client': 3.1.0(@japa/assert@4.0.1)(@japa/runner@4.2.0)
-      '@poppinss/macroable': 1.0.4
-      '@poppinss/utils': 6.9.4
-    dev: false
 
   /@adonisjs/tsconfig@1.4.0:
     resolution: {integrity: sha512-go5KlxE8jJaeoIRzm51PcF2YJSK5i022douVk9OjAqvDiU1t2UepcDoEsSiEOgogUDojp9kbRQmFyf0y0YqvOg==}
@@ -3304,6 +3272,26 @@ packages:
       '@radix-ui/react-use-layout-effect': 1.1.1(@types/react@19.0.10)(react@19.1.0)
       '@types/react': 19.0.10
       react: 19.1.0
+    dev: false
+
+  /@radix-ui/react-label@2.1.7(@types/react-dom@19.0.4)(@types/react@19.0.10)(react-dom@19.1.0)(react@19.1.0):
+    resolution: {integrity: sha512-YT1GqPSL8kJn20djelMX7/cTRp/Y9w5IZHvfxQTVHrOqa2yMl7i/UfMqKRU5V7mEyKTrUVgJXhNQPVCG8PBLoQ==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@radix-ui/react-primitive': 2.1.3(@types/react-dom@19.0.4)(@types/react@19.0.10)(react-dom@19.1.0)(react@19.1.0)
+      '@types/react': 19.0.10
+      '@types/react-dom': 19.0.4(@types/react@19.0.10)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
     dev: false
 
   /@radix-ui/react-menu@2.1.15(@types/react-dom@19.0.4)(@types/react@19.0.10)(react-dom@19.1.0)(react@19.1.0):
