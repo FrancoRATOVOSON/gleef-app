@@ -14,3 +14,8 @@ router.get('/', async () => {
     hello: 'world',
   }
 })
+
+const UsersController = () => import('#controllers/users_controller')
+
+router.post('/auth/signup', [UsersController, 'register'])
+router.post('/auth/login', [UsersController, 'login'])

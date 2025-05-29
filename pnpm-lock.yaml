@@ -22,7 +22,7 @@ importers:
     dependencies:
       '@adonisjs/auth':
         specifier: ^9.4.0
-        version: 9.4.0(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@adonisjs/lucid@21.6.1)(@japa/api-client@3.1.0)(@japa/plugin-adonisjs@4.0.0)
+        version: 9.4.0(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@adonisjs/lucid@21.6.1)(@adonisjs/session@7.5.1)(@japa/api-client@3.1.0)(@japa/plugin-adonisjs@4.0.0)
       '@adonisjs/core':
         specifier: ^6.18.0
         version: 6.18.0(@adonisjs/assembler@7.8.2)(@vinejs/vine@3.0.1)
@@ -32,6 +32,9 @@ importers:
       '@adonisjs/lucid':
         specifier: ^21.6.1
         version: 21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)(luxon@3.6.1)
+      '@adonisjs/session':
+        specifier: ^7.5.1
+        version: 7.5.1(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0)
       '@prisma/client':
         specifier: 6.8.2
         version: 6.8.2(prisma@6.8.2)(typescript@5.8.2)
@@ -96,9 +99,6 @@ importers:
       prisma:
         specifier: ^6.8.2
         version: 6.8.2(typescript@5.8.2)
-      prisma-json-types-generator:
-        specifier: ^3.4.2
-        version: 3.4.2(prisma@6.8.2)(typescript@5.8.2)
       ts-node-maintained:
         specifier: ^10.9.5
         version: 10.9.5(@swc/core@1.11.24)(@types/node@22.15.23)(typescript@5.8.2)
@@ -316,7 +316,7 @@ packages:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  /@adonisjs/auth@9.4.0(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@adonisjs/lucid@21.6.1)(@japa/api-client@3.1.0)(@japa/plugin-adonisjs@4.0.0):
+  /@adonisjs/auth@9.4.0(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@adonisjs/lucid@21.6.1)(@adonisjs/session@7.5.1)(@japa/api-client@3.1.0)(@japa/plugin-adonisjs@4.0.0):
     resolution: {integrity: sha512-dzvnJRKY+RcKUXCRT6ebnlGV0wAfejTSGqS0XbgjB97r6Pww14MhsY89EBr1nSydQzvjdbtIR3EDGbU97BVmbQ==}
     engines: {node: '>=18.16.0'}
     peerDependencies:
@@ -341,6 +341,7 @@ packages:
       '@adonisjs/core': 6.18.0(@adonisjs/assembler@7.8.2)(@vinejs/vine@3.0.1)
       '@adonisjs/lucid': 21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)(luxon@3.6.1)
       '@adonisjs/presets': 2.6.4(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)
+      '@adonisjs/session': 7.5.1(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0)
       '@japa/api-client': 3.1.0(@japa/assert@4.0.1)(@japa/runner@4.2.0)
       '@japa/plugin-adonisjs': 4.0.0(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0)(@japa/runner@4.2.0)
       '@poppinss/utils': 6.9.4
@@ -645,6 +646,37 @@ packages:
     dependencies:
       '@poppinss/colors': 4.1.4
       string-width: 7.2.0
+
+  /@adonisjs/session@7.5.1(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0):
+    resolution: {integrity: sha512-b1E0W/1nnJfAq3Gv8yPywgsxJ7uzzOBJxxulonXI4t1eSdvJzZGNrFScfVLOcjTwlxwrEFA847tULIQxgR4Spw==}
+    engines: {node: '>=18.16.0'}
+    peerDependencies:
+      '@adonisjs/core': ^6.6.0
+      '@adonisjs/redis': ^8.0.1 || ^9.0.0
+      '@aws-sdk/client-dynamodb': ^3.658.0
+      '@aws-sdk/util-dynamodb': ^3.658.0
+      '@japa/api-client': ^2.0.3 || ^3.0.0
+      '@japa/browser-client': ^2.0.3
+      edge.js: ^6.0.2
+    peerDependenciesMeta:
+      '@adonisjs/redis':
+        optional: true
+      '@aws-sdk/client-dynamodb':
+        optional: true
+      '@aws-sdk/util-dynamodb':
+        optional: true
+      '@japa/api-client':
+        optional: true
+      '@japa/browser-client':
+        optional: true
+      edge.js:
+        optional: true
+    dependencies:
+      '@adonisjs/core': 6.18.0(@adonisjs/assembler@7.8.2)(@vinejs/vine@3.0.1)
+      '@japa/api-client': 3.1.0(@japa/assert@4.0.1)(@japa/runner@4.2.0)
+      '@poppinss/macroable': 1.0.4
+      '@poppinss/utils': 6.9.4
+    dev: false
 
   /@adonisjs/tsconfig@1.4.0:
     resolution: {integrity: sha512-go5KlxE8jJaeoIRzm51PcF2YJSK5i022douVk9OjAqvDiU1t2UepcDoEsSiEOgogUDojp9kbRQmFyf0y0YqvOg==}
@@ -3065,10 +3097,6 @@ packages:
   /@prisma/debug@6.8.2:
     resolution: {integrity: sha512-4muBSSUwJJ9BYth5N8tqts8JtiLT8QI/RSAzEogwEfpbYGFo9mYsInsVo8dqXdPO2+Rm5OG5q0qWDDE3nyUbVg==}
 
-  /@prisma/dmmf@6.8.2:
-    resolution: {integrity: sha512-okGJF/7hQZam/2wt+Y0hPyNxyY5S+L0FzAgtL932Q3YxUWHusRllrN39bCV45oF3QWY992g7rTWYdL2Rynt1qg==}
-    dev: true
-
   /@prisma/engines-version@6.8.0-43.2060c79ba17c6bb9f5823312b6f6b7f4a845738e:
     resolution: {integrity: sha512-Rkik9lMyHpFNGaLpPF3H5q5TQTkm/aE7DsGM5m92FZTvWQsvmi6Va8On3pWvqLHOt5aPUvFb/FeZTmphI4CPiQ==}
 
@@ -3087,18 +3115,6 @@ packages:
       '@prisma/debug': 6.8.2
       '@prisma/engines-version': 6.8.0-43.2060c79ba17c6bb9f5823312b6f6b7f4a845738e
       '@prisma/get-platform': 6.8.2
-
-  /@prisma/generator-helper@6.8.2:
-    resolution: {integrity: sha512-KBLW47sbwFBKKYMiICIAEWsG6TdpPapPT7e7hpmpF3xMgYAm6YIXu4JGwfQVDY9Vbcb+0vPdPdSEQtInYOOe5g==}
-    dependencies:
-      '@prisma/debug': 6.8.2
-      '@prisma/dmmf': 6.8.2
-      '@prisma/generator': 6.8.2
-    dev: true
-
-  /@prisma/generator@6.8.2:
-    resolution: {integrity: sha512-yExkvgqiKg1WHzjYttz40g5DsOtud8RhapM0Mum6pw+wrDoQyhSAxs5NHyFCV+9VPvRd2v+jAP2CTT07bsibjw==}
-    dev: true
 
   /@prisma/get-platform@6.8.2:
     resolution: {integrity: sha512-vXSxyUgX3vm1Q70QwzwkjeYfRryIvKno1SXbIqwSptKwqKzskINnDUcx85oX+ys6ooN2ATGSD0xN2UTfg6Zcow==}
@@ -9275,20 +9291,6 @@ packages:
 
   /printable-characters@1.0.42:
     resolution: {integrity: sha512-dKp+C4iXWK4vVYZmYSd0KBH5F/h1HoZRsbJ82AVKRO3PEo8L4lBS/vLwhVtpwwuYcoIsVY+1JYKR268yn480uQ==}
-
-  /prisma-json-types-generator@3.4.2(prisma@6.8.2)(typescript@5.8.2):
-    resolution: {integrity: sha512-f//au4IY4HQ/0IF7JpGZAdJg1Gc2/yiLFTh0SiqYtGDmSkqlo5T2E2UUgkNktQt9twmxDawbUwEodOuNSEJ9EQ==}
-    engines: {node: '>=14.0'}
-    hasBin: true
-    peerDependencies:
-      prisma: ^6.7
-      typescript: ^5.8
-    dependencies:
-      '@prisma/generator-helper': 6.8.2
-      prisma: 6.8.2(typescript@5.8.2)
-      tslib: 2.8.1
-      typescript: 5.8.2
-    dev: true
 
   /prisma@6.8.2(typescript@5.8.2):
     resolution: {integrity: sha512-JNricTXQxzDtRS7lCGGOB4g5DJ91eg3nozdubXze3LpcMl1oWwcFddrj++Up3jnRE6X/3gB/xz3V+ecBk/eEGA==}
