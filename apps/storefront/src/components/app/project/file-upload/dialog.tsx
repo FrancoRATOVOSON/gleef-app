@@ -27,7 +27,7 @@ export default function UploadDialog({ onSubmit, isLoading }: DialogProps) {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button disabled={isLoading}>
+              <Button disabled={isLoading} className="cursor-pointer" onClick={() => setOpen(true)}>
                 {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
                 {isLoading ? 'Adding Translation' : 'Add Translation'}
               </Button>

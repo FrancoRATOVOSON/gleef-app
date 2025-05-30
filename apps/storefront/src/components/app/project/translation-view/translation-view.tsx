@@ -1,23 +1,34 @@
 import { Button } from '#/components/ui/button'
-import { Input } from '#/components/ui/input'
+
 import { ProjectType } from '#/types/projects'
 import { TranslationTableData } from '#/types/translations'
 import React from 'react'
+import { FileUploadDialog } from '../file-upload'
+import { TranslationTable } from '../translation-table'
 
 interface TranslationViewProps {
   project: ProjectType
-  onFileSelect: (file: File) => Promise<void>
+  onFileSelect: (files: File[]) => Promise<void>
   isFileUploadLoading: boolean
   translationEntries: TranslationTableData
+  availableLocales: string[]
+  onTranslationChange: (id: string, locale: string, value: string) => void
 }
 
-export function TranslationView({ project }: TranslationViewProps) {
+export function TranslationView({
+  project,
+  onFileSelect,
+  isFileUploadLoading,
+  translationEntries,
+  availableLocales,
+  onTranslationChange
+}: TranslationViewProps) {
   return (
-    <div>
-      <h1>{project.name}</h1>
-      <div>
-        <Input type="file" />
-        <Button>
+    <div className="space-y-4">
+      <h1 className="text-xl font-semibold">{project.name}</h1>
+      <div className="flex items-center gap-4">
+        <FileUploadDialog onSubmit={onFileSelect} isLoading={isFileUploadLoading} />
+        <Button variant="outline" asChild>
           <a
             href={`/api/projects/${project.id}/translations/download`}
             target="_blank"
@@ -26,6 +37,13 @@ export function TranslationView({ project }: TranslationViewProps) {
             Export
           </a>
         </Button>
+      </div>
+      <div>
+        <TranslationTable
+          data={translationEntries}
+          availableLocales={availableLocales}
+          onTranslationChange={onTranslationChange}
+        />
       </div>
     </div>
   )

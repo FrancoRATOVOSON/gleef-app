@@ -45,7 +45,7 @@ export function flattenTranslationObject(
 // Fonction utilitaire pour fusionner les traductions de différentes locales
 export function mergeTranslationsForTable(
   flattenedTemplate: TranslationEntry[],
-  localeTranslations: { [locales: string]: LocaleTranslations }
+  localeTranslations: LocaleTranslations
 ): TranslationTableData {
   // Use a Set to collect all unique keys from both sources
   const templateKeys = flattenedTemplate.length > 0 ? flattenedTemplate.map(entry => entry.key) : []
