@@ -5,7 +5,7 @@ import Link from 'next/link'
 export function Hero() {
   return (
     <div className="bg-background flex h-full w-full flex-col items-start justify-evenly gap-6 overflow-hidden p-16 pt-48">
-      <p className="whitespace-pre-wrap text-2xl font-normal sm:text-3xl md:text-4xl lg:text-5xl">
+      <div className="whitespace-pre-wrap text-2xl font-normal sm:text-3xl md:text-4xl lg:text-5xl">
         <span>{'Make your app more '}</span>
         <Typewriter
           text={[
@@ -26,7 +26,7 @@ export function Hero() {
           deleteSpeed={40}
           cursorChar={'_'}
         />
-      </p>
+      </div>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-start gap-2">
           <span className="mr-0">Look! Who&apos;s back,</span>

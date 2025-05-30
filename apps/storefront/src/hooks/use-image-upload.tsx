@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface UseImageUploadProps {
-  onUpload?: (file: File) => void
+  onUpload?: (files: File[]) => void
 }
 
+export type FileWithPreview = { textContent: string; previewUrl: string; name: string; file: File }
+
 export function useImageUpload({ onUpload }: UseImageUploadProps = {}) {
-  const previewRef = useRef<string | null>(null)
-  const [fileText, setFileText] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [fileName, setFileName] = useState<string | null>(null)
+  const [files, setFiles] = useState<Array<FileWithPreview>>([])
 
   const handleThumbnailClick = useCallback(() => {
     fileInputRef.current?.click()
@@ -17,44 +16,41 @@ export function useImageUpload({ onUpload }: UseImageUploadProps = {}) {
 
   const handleFileChange = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0]
-      if (file) {
-        setFileName(file.name)
-        const url = URL.createObjectURL(file)
-        setPreviewUrl(url)
-        previewRef.current = url
-        onUpload?.(file)
-        const fileText = await file.text()
-        setFileText(fileText)
-      }
+      if (event.target.files) {
+        const fileList: Array<FileWithPreview> = []
+        for (const file of Array.from(event.target.files)) {
+          fileList.push({
+            name: file.name,
+            previewUrl: URL.createObjectURL(file),
+            textContent: await file.text(),
+            file: file
+          })
+        }
+        setFiles(fileList)
+        onUpload?.(fileList.map(f => f.file))
+      } else setFiles([])
     },
     [onUpload]
   )
 
-  const handleRemove = useCallback(() => {
-    if (previewUrl) {
+  const handleRemove = useCallback(
+    (previewUrl: string) => {
+      const currentFiles = files.filter(file => file.previewUrl !== previewUrl)
+      setFiles(currentFiles)
+      onUpload?.(currentFiles.map(f => f.file))
       URL.revokeObjectURL(previewUrl)
-    }
-    setPreviewUrl(null)
-    setFileName(null)
-    previewRef.current = null
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ''
-    }
-  }, [previewUrl])
+    },
+    [files, onUpload]
+  )
 
   useEffect(() => {
     return () => {
-      if (previewRef.current) {
-        URL.revokeObjectURL(previewRef.current)
-      }
+      if (files.length) files.forEach(file => URL.revokeObjectURL(file.previewUrl))
     }
-  }, [])
+  }, [files])
 
   return {
-    previewUrl,
-    fileText,
-    fileName,
+    files,
     fileInputRef,
     handleThumbnailClick,
     handleFileChange,
