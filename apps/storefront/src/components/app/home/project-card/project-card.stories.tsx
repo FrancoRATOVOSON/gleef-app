@@ -12,8 +12,10 @@ type Story = StoryObj<typeof ProjectCard>
 
 export const Default: Story = {
   args: {
-    id: '4Z3RTYU8',
-    name: 'Sample Project',
-    createdAt: '2023-10-01T12:00:00Z'
+    project: {
+      id: '4Z3RTYU8',
+      name: 'Sample Project',
+      createdAt: '2023-10-01T12:00:00Z'
+    }
   }
 }
