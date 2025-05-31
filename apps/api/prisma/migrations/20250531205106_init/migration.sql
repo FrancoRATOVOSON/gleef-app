@@ -15,6 +15,7 @@ CREATE TABLE "project" (
     "name" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
+    "user_id" TEXT NOT NULL,
 
     CONSTRAINT "project_pkey" PRIMARY KEY ("id")
 );
@@ -71,6 +72,9 @@ CREATE UNIQUE INDEX "translation_key_project_id_key_path_key" ON "translation_ke
 
 -- CreateIndex
 CREATE UNIQUE INDEX "translation_translation_key_id_locale_id_key" ON "translation"("translation_key_id", "locale_id");
+
+-- AddForeignKey
+ALTER TABLE "project" ADD CONSTRAINT "project_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "translation_key" ADD CONSTRAINT "translation_key_project_id_fkey" FOREIGN KEY ("project_id") REFERENCES "project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

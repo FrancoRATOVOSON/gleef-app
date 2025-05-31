@@ -21,6 +21,8 @@ model User {
   createdAt        DateTime     @default(now())              @map("created_at")
   updatedAt        DateTime     @updatedAt                   @map("updated_at")
 
+  projects         Project[]
+
   @@map("user")
 }
 
@@ -29,6 +31,9 @@ model Project {
   name             String           @unique                  @map("name")
   createdAt        DateTime         @default(now())          @map("created_at")
   updatedAt        DateTime         @updatedAt               @map("updated_at")
+
+  userId           String                                    @map("user_id")
+  user             User             @relation(fields: [userId], references: [id])
 
   translationKeys  TranslationKey[]
 
