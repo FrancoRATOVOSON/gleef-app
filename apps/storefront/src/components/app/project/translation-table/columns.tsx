@@ -16,7 +16,7 @@ import { toast } from 'sonner'
 interface CreateTranslationColumnsOptions {
   availableLocales: string[]
   onTranslationChange: (id: string, locale: string, value: string) => void
-  onAddTranslation: (fullKey: string, values: { [locales: string]: string | null }) => Promise<void>
+  onAddTranslation: (fullKey: string, values: { [locales: string]: string | null }) => void
   isAddSubmitting: boolean
   data: TranslationTableData
 }

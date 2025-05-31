@@ -5,7 +5,7 @@ import { useCallback, useRef } from 'react'
 export interface AddTokenProps {
   fullKey: string
   locales: Array<string>
-  onSubmit: (fullKey: string, values: { [locales: string]: string | null }) => Promise<void>
+  onSubmit: (fullKey: string, values: { [locales: string]: string | null }) => void
   isSubmitting: boolean
 }
 

@@ -8,12 +8,12 @@ import { TranslationTable } from '../translation-table'
 
 interface TranslationViewProps {
   project: ProjectType
-  onFileSelect: (files: File[]) => Promise<void>
+  onFileSelect: (files: File[]) => void
   isFileUploadLoading: boolean
   translationEntries: TranslationTableData
   availableLocales: string[]
   onTranslationChange: (id: string, locale: string, value: string) => void
-  onAddTranslation: (fullKey: string, values: { [locales: string]: string | null }) => Promise<void>
+  onAddTranslation: (fullKey: string, values: { [locales: string]: string | null }) => void
   isAddSubmitting: boolean
 }
 
