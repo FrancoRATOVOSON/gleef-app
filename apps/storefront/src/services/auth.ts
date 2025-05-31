@@ -1,10 +1,10 @@
 import { fetchPOST } from '#/lib/utils'
-import { CredentialsType } from '#/types/auth'
+import { CredentialsType, UserType } from '#/types/auth'
 
 export const login = (credentials: CredentialsType) =>
-  fetchPOST('/auth/login', credentials, { credentials: undefined })
+  fetchPOST<UserType, CredentialsType>('/auth/login', credentials, { credentials: undefined })
 
 export const signup = (credentials: CredentialsType) =>
-  fetchPOST('/auth/signup', credentials, { credentials: undefined })
+  fetchPOST<UserType, CredentialsType>('/auth/signup', credentials, { credentials: undefined })
 
-export const logout = () => fetchPOST('/auth/logout', {})
+export const logout = () => fetchPOST<void, undefined>('/auth/logout', undefined)

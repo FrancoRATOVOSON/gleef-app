@@ -7,7 +7,7 @@ import React from 'react'
 
 interface AppLayoutProps extends React.PropsWithChildren {
   username: string
-  onLogout: () => Promise<void>
+  onLogout: () => void
 }
 
 export function AppLayout({ username, onLogout, children }: AppLayoutProps) {

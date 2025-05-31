@@ -10,7 +10,11 @@ export default function Signup() {
   const router = useRouter()
   const { mutate, isPending } = useMutation({
     mutationFn: signup,
-    onSuccess: () => router.push('/home'),
+    onSuccess: ({ id, username }) => {
+      localStorage.setItem('id', id)
+      localStorage.setItem('username', username)
+      router.push('/home')
+    },
     onError: err => {
       console.error('Error on login :', err)
       toast(`Error when registering: ${err.message}`)
