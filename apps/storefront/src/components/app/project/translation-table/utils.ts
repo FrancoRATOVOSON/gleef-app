@@ -103,21 +103,15 @@ function getNestedValue(obj: { [key: string]: unknown }, path: string): string |
 // Fonction pour reconstituer le JSON à partir des données de la table
 export function unflattenTranslationTableData(
   tableData: TranslationTableData,
-  locales: string[]
-): LocaleTranslations {
-  const result: LocaleTranslations = {}
-
-  locales.forEach(locale => {
-    result[locale] = {}
-  })
+  locale: string
+): TranslationJson {
+  const result: TranslationJson = {}
 
   tableData.forEach(entry => {
     if (!entry.isGroupHeader) {
       // Ignorer les en-têtes de groupe lors de la reconstitution
-      locales.forEach(locale => {
-        const value = entry[locale] || '' // Prendre la valeur ou une chaîne vide si null/undefined
-        setNestedValue(result[locale], entry.key, value as string)
-      })
+      const value = entry[locale] || '' // Prendre la valeur ou une chaîne vide si null/undefined
+      setNestedValue(result, entry.key, value as string)
     }
   })
   return result

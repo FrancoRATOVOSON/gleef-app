@@ -2,26 +2,30 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-import { TranslationEntry } from '#/types/translations'
+import { TranslationEntry, TranslationTableData } from '#/types/translations'
 import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
 import { ArrowUpDown } from 'lucide-react'
 import { cn } from '#/lib/utils'
 import React from 'react'
 import { AddTokenDialog } from '../add-token'
+import { Popover, PopoverContent, PopoverTrigger } from '#/components/ui/popover'
+import { unflattenTranslationTableData } from './utils'
 
 interface CreateTranslationColumnsOptions {
   availableLocales: string[]
   onTranslationChange: (id: string, locale: string, value: string) => void
   onAddTranslation: (fullKey: string, values: { [locales: string]: string | null }) => Promise<void>
   isAddSubmitting: boolean
+  data: TranslationTableData
 }
 
 export const createTranslationColumns = ({
   availableLocales,
   onTranslationChange,
   onAddTranslation,
-  isAddSubmitting
+  isAddSubmitting,
+  data
 }: CreateTranslationColumnsOptions): ColumnDef<TranslationEntry>[] => {
   const columns: ColumnDef<TranslationEntry>[] = [
     {
@@ -49,7 +53,7 @@ export const createTranslationColumns = ({
           <div style={indentation} className="flex items-center gap-2 font-mono">
             {isGroupHeader ? (
               <AddTokenDialog
-                fullKey={displayKey}
+                fullKey={row.original.key}
                 locales={availableLocales}
                 onSubmit={onAddTranslation}
                 isSubmitting={isAddSubmitting}
@@ -75,7 +79,43 @@ export const createTranslationColumns = ({
   availableLocales.forEach(locale => {
     columns.push({
       accessorKey: locale,
-      header: locale,
+      header: () => {
+        const handleExportToFile = () => {
+          const jsonTranslation = unflattenTranslationTableData(data, locale)
+          try {
+            const textContent = JSON.stringify(jsonTranslation)
+            const blob = new Blob([textContent], { type: 'application/json' })
+            const url = URL.createObjectURL(blob)
+
+            const a = document.createElement('a')
+            a.href = url
+            a.download = locale
+            a.click()
+            document.body.removeChild(a)
+            URL.revokeObjectURL(url)
+          } catch (error: unknown) {
+            console.error('Erreur lors de la sérialisation JSON :', error)
+            // Afficher un message d'erreur plus convivial à l'utilisateur si c'est une application front-end.
+            alert('Impossible de sauvegarder le fichier. Erreur de format de données.')
+            // Alert toast
+          }
+        }
+
+        return (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button className="cursor-pointer" variant="ghost">
+                {locale}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-fit">
+              <Button variant="secondary" onClick={handleExportToFile}>
+                Export To
+              </Button>
+            </PopoverContent>
+          </Popover>
+        )
+      },
       cell: ({ row }) => {
         const [isEditable, setEditable] = React.useState(false)
         const inputRef = React.useRef<HTMLInputElement>(null)

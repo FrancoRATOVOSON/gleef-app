@@ -60,9 +60,10 @@ export function TranslationTable({
         availableLocales,
         onTranslationChange,
         onAddTranslation,
-        isAddSubmitting
+        isAddSubmitting,
+        data
       }),
-    [availableLocales, isAddSubmitting, onAddTranslation, onTranslationChange]
+    [availableLocales, isAddSubmitting, onAddTranslation, onTranslationChange, data]
   )
 
   const table = useReactTable({
