@@ -17,7 +17,7 @@ import { ProjectCard } from '../project-card'
 import { cn } from '#/lib/utils'
 
 interface ProjectListProps {
-  onCreate: (name: string) => Promise<void>
+  onCreate: (name: string) => void
   isLoading: boolean
   projects: Array<ProjectType>
 }
