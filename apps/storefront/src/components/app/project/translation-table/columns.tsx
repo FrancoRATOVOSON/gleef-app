@@ -11,6 +11,7 @@ import React from 'react'
 import { AddTokenDialog } from '../add-token'
 import { Popover, PopoverContent, PopoverTrigger } from '#/components/ui/popover'
 import { unflattenTranslationTableData } from './utils'
+import { toast } from 'sonner'
 
 interface CreateTranslationColumnsOptions {
   availableLocales: string[]
@@ -94,10 +95,8 @@ export const createTranslationColumns = ({
             document.body.removeChild(a)
             URL.revokeObjectURL(url)
           } catch (error: unknown) {
-            console.error('Erreur lors de la sérialisation JSON :', error)
-            // Afficher un message d'erreur plus convivial à l'utilisateur si c'est une application front-end.
-            alert('Impossible de sauvegarder le fichier. Erreur de format de données.')
-            // Alert toast
+            console.error('File exoprt error :', error)
+            toast('An error occured while generating file.')
           }
         }
 
