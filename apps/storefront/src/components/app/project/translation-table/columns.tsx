@@ -8,15 +8,20 @@ import { Input } from '#/components/ui/input'
 import { ArrowUpDown } from 'lucide-react'
 import { cn } from '#/lib/utils'
 import React from 'react'
+import { AddTokenDialog } from '../add-token'
 
 interface CreateTranslationColumnsOptions {
   availableLocales: string[]
   onTranslationChange: (id: string, locale: string, value: string) => void
+  onAddTranslation: (fullKey: string, values: { [locales: string]: string | null }) => Promise<void>
+  isAddSubmitting: boolean
 }
 
 export const createTranslationColumns = ({
   availableLocales,
-  onTranslationChange
+  onTranslationChange,
+  onAddTranslation,
+  isAddSubmitting
 }: CreateTranslationColumnsOptions): ColumnDef<TranslationEntry>[] => {
   const columns: ColumnDef<TranslationEntry>[] = [
     {
@@ -41,20 +46,15 @@ export const createTranslationColumns = ({
         const indentation = { paddingLeft: `${(level + 1) * 16}px` }
 
         return (
-          <div style={indentation} className="flex items-center font-mono">
+          <div style={indentation} className="flex items-center gap-2 font-mono">
             {isGroupHeader ? (
-              // Bouton d'expansion pour les en-têtes de groupe
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={row.getToggleExpandedHandler()}
-                className="mr-2"
-                aria-expanded={row.getIsExpanded()}
-              >
-                {row.getIsExpanded() ? '▼' : '▶'}
-              </Button>
+              <AddTokenDialog
+                fullKey={displayKey}
+                locales={availableLocales}
+                onSubmit={onAddTranslation}
+                isSubmitting={isAddSubmitting}
+              />
             ) : (
-              // Placeholder pour l'indentation des feuilles
               <span className="mr-2 inline-block h-6 w-6"></span>
             )}
             <span className={isGroupHeader ? 'font-bold text-gray-700' : 'text-gray-900'}>

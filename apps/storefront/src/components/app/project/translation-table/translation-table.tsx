@@ -37,14 +37,16 @@ interface TranslationDataTableProps {
   data: TranslationTableData
   availableLocales: string[]
   onTranslationChange: (id: string, locale: string, value: string) => void
-  // Permet de passer des props aux colonnes
-  // Par exemple si on veut ajouter des actions globales
+  onAddTranslation: (fullKey: string, values: { [locales: string]: string | null }) => Promise<void>
+  isAddSubmitting: boolean
 }
 
 export function TranslationTable({
   data,
   availableLocales,
-  onTranslationChange
+  onTranslationChange,
+  isAddSubmitting,
+  onAddTranslation
 }: TranslationDataTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -53,8 +55,14 @@ export function TranslationTable({
   const [expanded, setExpanded] = React.useState({}) // État pour l'expansion des lignes
 
   const columns = React.useMemo(
-    () => createTranslationColumns({ availableLocales, onTranslationChange }),
-    [availableLocales, onTranslationChange]
+    () =>
+      createTranslationColumns({
+        availableLocales,
+        onTranslationChange,
+        onAddTranslation,
+        isAddSubmitting
+      }),
+    [availableLocales, isAddSubmitting, onAddTranslation, onTranslationChange]
   )
 
   const table = useReactTable({

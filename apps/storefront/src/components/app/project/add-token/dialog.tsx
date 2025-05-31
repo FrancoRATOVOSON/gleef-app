@@ -26,7 +26,7 @@ export default function AddTokenDialog({
       <DialogTrigger asChild>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" onClick={() => setIsOpen(true)}>
               {isSubmitting ? (
                 <Loader className="size-4 animate-spin" />
               ) : (

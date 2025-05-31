@@ -17,6 +17,7 @@ const RenderFunction = () => {
   const [translations, setTranslations] = useState<TranslationEntry[]>([])
   const [locales, setLocales] = useState<string[]>([])
   const [isFileUploadLoading, setIsFileUploadLoading] = useState(false)
+  const [isAddSubmitting, setIsAddSubmitting] = useState(false)
 
   const onTranslationChange = useCallback(
     (id: string, locale: string, value: string) => {
@@ -56,6 +57,18 @@ const RenderFunction = () => {
     [translations]
   )
 
+  const onAddTranslation = useCallback(
+    (fullKey: string, values: { [locales: string]: string | null }) => {
+      return new Promise<void>(() => {
+        setIsAddSubmitting(true)
+
+        setTimeout(() => console.log(`Created ${fullKey} with ${JSON.stringify(values)}`), 3_000)
+        setIsAddSubmitting(false)
+      })
+    },
+    []
+  )
+
   return (
     <TranslationView
       project={{
@@ -68,6 +81,8 @@ const RenderFunction = () => {
       onFileSelect={onFileSelect}
       onTranslationChange={onTranslationChange}
       translationEntries={translations}
+      isAddSubmitting={isAddSubmitting}
+      onAddTranslation={onAddTranslation}
     />
   )
 }

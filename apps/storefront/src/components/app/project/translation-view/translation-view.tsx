@@ -13,6 +13,8 @@ interface TranslationViewProps {
   translationEntries: TranslationTableData
   availableLocales: string[]
   onTranslationChange: (id: string, locale: string, value: string) => void
+  onAddTranslation: (fullKey: string, values: { [locales: string]: string | null }) => Promise<void>
+  isAddSubmitting: boolean
 }
 
 export function TranslationView({
@@ -21,7 +23,9 @@ export function TranslationView({
   isFileUploadLoading,
   translationEntries,
   availableLocales,
-  onTranslationChange
+  onTranslationChange,
+  onAddTranslation,
+  isAddSubmitting
 }: TranslationViewProps) {
   return (
     <div className="space-y-4">
@@ -43,6 +47,8 @@ export function TranslationView({
           data={translationEntries}
           availableLocales={availableLocales}
           onTranslationChange={onTranslationChange}
+          onAddTranslation={onAddTranslation}
+          isAddSubmitting={isAddSubmitting}
         />
       </div>
     </div>
