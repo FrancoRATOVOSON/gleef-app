@@ -1,6 +1,6 @@
 import { Button } from '#/components/ui/button'
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '#/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '#/components/ui/tooltip'
 
 import { LogOut, UserCircle } from 'lucide-react'
 import React from 'react'
@@ -19,18 +19,16 @@ export function AppLayout({ username, onLogout, children }: AppLayoutProps) {
           <p className="ml-2">{username}</p>
         </div>
 
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="outline" size="icon" onClick={onLogout}>
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>LogOut</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="outline" size="icon" onClick={onLogout}>
+              <LogOut className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>LogOut</p>
+          </TooltipContent>
+        </Tooltip>
       </header>
       <main className="flex size-full grow flex-col items-stretch justify-start">{children}</main>
     </div>
