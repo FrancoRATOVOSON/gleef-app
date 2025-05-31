@@ -59,3 +59,44 @@ export function fetchPUT<T, U>(endpoint: string, body: U, options: RequestInit =
     body: JSON.stringify(body)
   })
 }
+
+async function fetchUpload<T>(
+  endpoint: string,
+  formData: FormData,
+  options: RequestInit = {}
+): Promise<T> {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`
+
+  const response = await fetch(url, {
+    method: 'POST',
+    credentials: 'include',
+    ...options,
+    body: formData
+  })
+
+  if (!response.ok) {
+    let errorBody: unknown
+    try {
+      errorBody = await response.json()
+    } catch {
+      errorBody = await response.text()
+    }
+    throw new ApiError(response.status, response.statusText, errorBody)
+  }
+
+  if (response.status === 204) {
+    return undefined as T
+  }
+
+  return response.json() as Promise<T>
+}
+
+export function uploadFiles<T>(endpoint: string, files: File[]): Promise<T> {
+  const formData = new FormData()
+
+  files.forEach(file => {
+    formData.append(file.name, file, file.name)
+  })
+
+  return fetchUpload<T>(endpoint, formData)
+}
