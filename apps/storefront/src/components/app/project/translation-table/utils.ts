@@ -33,7 +33,7 @@ export function flattenTranslationObject(
           id: uuidv4(),
           key: fullKey,
           displayKey: k,
-          level: level + 1
+          level: level
           // Les locales seront ajoutées plus tard ou au moment de la fusion
         })
       }
