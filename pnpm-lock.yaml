@@ -69,6 +69,85 @@ importers:
       '@japa/runner':
         specifier: ^4.2.0
         version: 4.2.0
+      '@swc/core':
+        specifier: 1.11.24
+        version: 1.11.24
+      '@types/node':
+        specifier: ^22.15.18
+        version: 22.15.23
+      eslint:
+        specifier: ^9.26.0
+        version: 9.27.0
+      hot-hook:
+        specifier: ^0.4.0
+        version: 0.4.0
+      pino-pretty:
+        specifier: ^13.0.0
+        version: 13.0.0
+      prettier:
+        specifier: ^3.5.3
+        version: 3.5.3
+      prisma:
+        specifier: ^6.8.2
+        version: 6.8.2(typescript@5.8.2)
+      ts-node-maintained:
+        specifier: ^10.9.5
+        version: 10.9.5(@swc/core@1.11.24)(@types/node@22.15.23)(typescript@5.8.2)
+      typescript:
+        specifier: ~5.8
+        version: 5.8.2
+
+  apps/api-test:
+    dependencies:
+      '@adonisjs/auth':
+        specifier: ^9.4.0
+        version: 9.4.0(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@adonisjs/lucid@21.6.1)(@japa/api-client@3.1.0)(@japa/plugin-adonisjs@4.0.0)
+      '@adonisjs/core':
+        specifier: ^6.18.0
+        version: 6.18.0(@adonisjs/assembler@7.8.2)(@vinejs/vine@3.0.1)
+      '@adonisjs/cors':
+        specifier: ^2.2.1
+        version: 2.2.1(@adonisjs/core@6.18.0)
+      '@adonisjs/lucid':
+        specifier: ^21.6.1
+        version: 21.6.1(@adonisjs/assembler@7.8.2)(@adonisjs/core@6.18.0)(@vinejs/vine@3.0.1)(luxon@3.6.1)
+      '@prisma/client':
+        specifier: 6.8.2
+        version: 6.8.2(prisma@6.8.2)(typescript@5.8.2)
+      '@vinejs/vine':
+        specifier: ^3.0.1
+        version: 3.0.1
+      luxon:
+        specifier: ^3.6.1
+        version: 3.6.1
+      reflect-metadata:
+        specifier: ^0.2.2
+        version: 0.2.2
+    devDependencies:
+      '@adonisjs/assembler':
+        specifier: ^7.8.2
+        version: 7.8.2(typescript@5.8.2)
+      '@adonisjs/eslint-config':
+        specifier: ^2.0.0
+        version: 2.1.0(eslint@9.27.0)(prettier@3.5.3)(typescript@5.8.2)
+      '@adonisjs/prettier-config':
+        specifier: ^1.4.4
+        version: 1.4.5
+      '@adonisjs/tsconfig':
+        specifier: ^1.4.0
+        version: 1.4.0
+      '@japa/api-client':
+        specifier: ^3.1.0
+        version: 3.1.0(@japa/assert@4.0.1)(@japa/runner@4.2.0)
+      '@japa/assert':
+        specifier: ^4.0.1
+        version: 4.0.1(@japa/runner@4.2.0)
+      '@japa/plugin-adonisjs':
+        specifier: ^4.0.0
+        version: 4.0.0(@adonisjs/core@6.18.0)(@japa/api-client@3.1.0)(@japa/runner@4.2.0)
+      '@japa/runner':
+        specifier: ^4.2.0
+        version: 4.2.0
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/config-eslint
@@ -214,6 +293,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.7
+      '@tanstack/react-query-devtools':
+        specifier: ^5.79.0
+        version: 5.79.0(@tanstack/react-query@5.79.0)(react@19.1.0)
       '@types/node':
         specifier: ^22
         version: 22.15.3
@@ -4568,7 +4650,21 @@ packages:
 
   /@tanstack/query-core@5.79.0:
     resolution: {integrity: sha512-s+epTqqLM0/TbJzMAK7OEhZIzh63P9sWz5HEFc5XHL4FvKQXQkcjI8F3nee+H/xVVn7mrP610nVXwOytTSYd0w==}
-    dev: false
+
+  /@tanstack/query-devtools@5.76.0:
+    resolution: {integrity: sha512-1p92nqOBPYVqVDU0Ua5nzHenC6EGZNrLnB2OZphYw8CNA1exuvI97FVgIKON7Uug3uQqvH/QY8suUKpQo8qHNQ==}
+    dev: true
+
+  /@tanstack/react-query-devtools@5.79.0(@tanstack/react-query@5.79.0)(react@19.1.0):
+    resolution: {integrity: sha512-YVRWxjxsWycWChjKxvaIAPdNC5LX0zpiHoNyTB8teDZpQstM1b7mCuAp3x60cjX1MhLoO3vbaeY29EKst4D4ug==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.79.0
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-devtools': 5.76.0
+      '@tanstack/react-query': 5.79.0(react@19.1.0)
+      react: 19.1.0
+    dev: true
 
   /@tanstack/react-query@5.79.0(react@19.1.0):
     resolution: {integrity: sha512-DjC4JIYZnYzxaTzbg3osOU63VNLP67dOrWet2cZvXgmgwAXNxfS52AMq86M5++ILuzW+BqTUEVMTjhrZ7/XBuA==}
@@ -4577,7 +4673,6 @@ packages:
     dependencies:
       '@tanstack/query-core': 5.79.0
       react: 19.1.0
-    dev: false
 
   /@tanstack/react-table@8.21.3(react-dom@19.1.0)(react@19.1.0):
     resolution: {integrity: sha512-5nNMTSETP4ykGegmVkhjcS8tTLW6Vl4axfEGQN3v0zdHYbK4UfoqfPChclTrJ4EoK9QynqAu9oUf8VEmrpZ5Ww==}

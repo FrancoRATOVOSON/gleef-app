@@ -27,9 +27,9 @@ export default function ProjectPageComponent({ id }: ProjectComponentProps) {
   const router = useRouter()
 
   if (!project) {
-    router.push('/home')
+    // router.push('/home')
     toast('Something went wrong while fetching project details')
-    return null
+    return <div>Nothing here</div>
   }
 
   return (

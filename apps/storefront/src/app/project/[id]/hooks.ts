@@ -1,3 +1,4 @@
+import { queryClient } from '#/lib/client'
 import { queryKeys } from '#/lib/constants'
 import { getProject } from '#/services/projects'
 import {
@@ -7,12 +8,12 @@ import {
   updateTranslation,
   uploadFiles
 } from '#/services/translation'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
 export function useGetLocales(projectId: string) {
   const { data } = useQuery({
-    queryKey: [queryKeys.getLocales, { projectId }],
+    queryKey: [queryKeys.getLocales],
     queryFn: () => getLocales(projectId)
   })
 
@@ -56,8 +57,11 @@ export function useAddTranslation() {
 }
 
 export function useFileUpload() {
+  const client = useQueryClient(queryClient)
   const { mutate, isPending } = useMutation({
-    mutationFn: uploadFiles
+    mutationFn: uploadFiles,
+    onSuccess: () =>
+      client.invalidateQueries({ queryKey: [queryKeys.getLocales, queryKeys.getTranslations] })
   })
 
   return { onFileSelect: mutate, isFileUploadLoading: isPending }

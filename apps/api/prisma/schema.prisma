@@ -14,26 +14,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id               String       @id @default(uuid())         @map("id")
-  username         String       @unique                     @map("username")
-  password         String                                     @map("password")
-  createdAt        DateTime     @default(now())              @map("created_at")
-  updatedAt        DateTime     @updatedAt                   @map("updated_at")
-
-  projects         Project[]
-
-  @@map("user")
-}
-
 model Project {
   id               String           @id @default(ulid())     @map("id")
   name             String           @unique                  @map("name")
   createdAt        DateTime         @default(now())          @map("created_at")
   updatedAt        DateTime         @updatedAt               @map("updated_at")
-
-  userId           String                                    @map("user_id")
-  user             User             @relation(fields: [userId], references: [id])
 
   translationKeys  TranslationKey[]
 

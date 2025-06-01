@@ -102,7 +102,7 @@ export function uploadFiles<T>(
       if (typeof value === 'string') formData.append(key, value)
       else
         value.forEach(file => {
-          formData.append(file.name, file, file.name)
+          formData.append(key, file, file.name)
         })
     }
 

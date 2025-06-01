@@ -1,11 +1,8 @@
-import { cuid } from '@adonisjs/core/helpers'
-
 export type TranslationJson = {
   [key: string]: string | TranslationJson
 }
 
-type TranslationEntry = {
-  id: string
+export type TranslationEntry = {
   [locale: string]: string | boolean | null | undefined
   key: string
   isGroupHeader: boolean
@@ -25,7 +22,6 @@ export function flattenTranslationObject(
       if (typeof value === 'object' && value !== null) {
         // C'est un objet imbriqué, c'est un "groupe"
         result.push({
-          id: cuid(),
           key: fullKey,
           isGroupHeader: true,
         })
@@ -33,7 +29,6 @@ export function flattenTranslationObject(
       } else {
         // C'est une valeur de traduction
         result.push({
-          id: cuid(),
           key: fullKey,
           isGroupHeader: false,
           [locale]: value,

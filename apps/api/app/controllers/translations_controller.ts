@@ -1,15 +1,12 @@
 import db from '#config/db'
 import { Prisma } from '#prisma/index'
-import { flattenTranslationObject, TranslationJson } from '#utils/translation'
+import { flattenTranslationObject, TranslationEntry, TranslationJson } from '#utils/translation'
 import { uploadFilesValidator } from '#validators/translation'
 import type { HttpContext } from '@adonisjs/core/http'
 import fs from 'node:fs/promises'
 
 export default class TranslationsController {
-  async updateTranslation({ auth, request, response }: HttpContext) {
-    const { user } = auth
-    if (!user) return response.status(401)
-
+  async updateTranslation({ request, response }: HttpContext) {
     const {
       id,
       locale: code,
@@ -18,21 +15,24 @@ export default class TranslationsController {
     if (!id || !code || !value) return response.status(400)
 
     const existingLocale = await db.locale.findUnique({ where: { code } })
-    const existingTranslation = await db.translation.findUnique({ where: { id, locale: { code } } })
+    const existingTranslation = await db.translationKey.findUnique({ where: { id } })
     if (!existingLocale || !existingTranslation) return response.status(404)
 
-    const translation = await db.translation.update({
-      where: { id, locale: { code } },
-      data: { value },
+    const translation = await db.translation.upsert({
+      where: {
+        translationKeyId_localeId: {
+          localeId: existingLocale.id,
+          translationKeyId: existingTranslation.id,
+        },
+      },
+      create: { value, localeId: existingLocale.id, translationKeyId: existingTranslation.id },
+      update: { value, localeId: existingLocale.id },
     })
 
     return translation
   }
 
-  async createTranslation({ auth, request, response }: HttpContext) {
-    const { user } = auth
-    if (!user) return response.status(401)
-
+  async createTranslation({ request, response }: HttpContext) {
     const {
       projectId,
       fullKey: keyPath,
@@ -79,20 +79,18 @@ export default class TranslationsController {
     return {}
   }
 
-  async uploadFiles({ auth, request, response }: HttpContext) {
-    const { user } = auth
-    if (!user) return response.status(401)
-
-    const { files, projectId } = await request.validateUsing(uploadFilesValidator)
+  async uploadFiles({ request, response }: HttpContext) {
+    const { files: validatedFiles, projectId } = await request.validateUsing(uploadFilesValidator)
 
     const localeTranslations: Record<string, TranslationJson> = {}
+    const files = Array.isArray(validatedFiles) ? validatedFiles : [validatedFiles]
 
     for (const file of files) {
       if (file.isValid && file.tmpPath) {
         try {
           const content = await fs.readFile(file.tmpPath, 'utf-8')
           const jsonData = JSON.parse(content)
-          localeTranslations[file.clientName] = jsonData
+          localeTranslations[file.clientName.replace('.json', '')] = jsonData
         } catch (error) {
           console.error(`Failed to process file ${file.clientName}:`, error)
           return response.status(422).send({
@@ -107,16 +105,19 @@ export default class TranslationsController {
       .flat()
 
     const result = await db.$transaction(async (tx) => {
-      await tx.translationKey.createManyAndReturn({
-        data: translationList.map(
-          ({ id, key: keyPath, isGroupHeader }) =>
-            ({
-              id,
-              keyPath,
-              isGroupHeader,
-              projectId,
-            }) satisfies Prisma.TranslationKeyCreateManyInput
-        ),
+      const translationWithValues: Array<TranslationEntry & { id: string }> = []
+      translationList.forEach(async ({ isGroupHeader, key, ...translation }) => {
+        const { id } = await tx.translationKey.upsert({
+          where: { keyPath: key },
+          create: {
+            keyPath: key,
+            isGroupHeader,
+            projectId,
+          },
+          update: { isGroupHeader },
+          select: { id: true },
+        })
+        translationWithValues.push({ id, isGroupHeader, key, ...translation })
       })
 
       const locales = await Promise.all(
@@ -127,10 +128,6 @@ export default class TranslationsController {
             update: {},
           })
         )
-      )
-
-      const translationWithValues = translationList.filter(
-        (translation) => !translation.isGroupHeader
       )
 
       const data = translationWithValues

@@ -2,13 +2,8 @@ import db from '#config/db'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ProjectsController {
-  async getAll({ auth, response }: HttpContext) {
-    const { user } = auth
-    if (!user) return response.status(401)
-
-    const projects = await db.project.findMany({
-      where: { userId: user.id },
-    })
+  async getAll() {
+    const projects = await db.project.findMany()
     return projects.map(({ id, name, createdAt }) => ({ id, name, createdAt }))
   }
 
@@ -22,24 +17,17 @@ export default class ProjectsController {
     return project
   }
 
-  async create({ auth, response, request }: HttpContext) {
-    const { user } = auth
-    if (!user) return response.status(401)
-
+  async create({ request }: HttpContext) {
     const { name } = request.body() as { name: string }
     const project = await db.project.create({
       data: {
         name,
-        userId: user.id,
       },
     })
     return project
   }
 
-  async getLocales({ auth, request, response }: HttpContext) {
-    const { user } = auth
-    if (!user) return response.status(401)
-
+  async getLocales({ request, response }: HttpContext) {
     const id = request.param('id', null)
     if (!id) return response.status(400)
 
@@ -54,13 +42,10 @@ export default class ProjectsController {
         },
       },
     })
-    return locales.map(({ name }) => name)
+    return locales.map(({ code }) => code)
   }
 
-  async getTranslations({ auth, request, response }: HttpContext) {
-    const { user } = auth
-    if (!user) return response.status(401)
-
+  async getTranslations({ request, response }: HttpContext) {
     const id = request.param('id', null)
     if (!id) return response.status(400)
 
