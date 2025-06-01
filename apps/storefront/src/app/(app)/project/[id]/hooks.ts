@@ -47,7 +47,8 @@ export function useAddTranslation() {
   })
 
   const onAddTranslation = useCallback(
-    (fullKey: string, values: { [locales: string]: string | null }) => mutate({ fullKey, values }),
+    (projectId: string, fullKey: string, values: { [locales: string]: string | null }) =>
+      mutate({ projectId, fullKey, values }),
     [mutate]
   )
 

@@ -91,12 +91,20 @@ async function fetchUpload<T>(
   return response.json() as Promise<T>
 }
 
-export function uploadFiles<T>(endpoint: string, files: File[]): Promise<T> {
+export function uploadFiles<T>(
+  endpoint: string,
+  payloads?: Record<string, string | File[]>
+): Promise<T> {
   const formData = new FormData()
 
-  files.forEach(file => {
-    formData.append(file.name, file, file.name)
-  })
+  if (payloads)
+    for (const [key, value] of Object.entries(payloads)) {
+      if (typeof value === 'string') formData.append(key, value)
+      else
+        value.forEach(file => {
+          formData.append(file.name, file, file.name)
+        })
+    }
 
   return fetchUpload<T>(endpoint, formData)
 }

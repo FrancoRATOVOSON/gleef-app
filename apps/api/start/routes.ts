@@ -26,3 +26,19 @@ router
     return response.redirect('/login')
   })
   .use(middleware.auth())
+
+const ProjectsController = () => import('#controllers/projects_controller')
+
+router.get('/projects', [ProjectsController, 'getAll']).use(middleware.auth())
+router.post('/project/create', [ProjectsController, 'create']).use(middleware.auth())
+router.get('/project/:id', [ProjectsController, 'getSingle']).use(middleware.auth())
+router.get('/project/:id/locales', [ProjectsController, 'getLocales']).use(middleware.auth())
+router
+  .get('/project/:id/translations', [ProjectsController, 'getTranslations'])
+  .use(middleware.auth())
+
+const TranslationsController = () => import('#controllers/translations_controller')
+
+router.post('/translation', [TranslationsController, 'createTranslation']).use(middleware.auth())
+router.put('/translation', [TranslationsController, 'updateTranslation']).use(middleware.auth())
+router.post('/translations', [TranslationsController, 'uploadFiles']).use(middleware.auth())

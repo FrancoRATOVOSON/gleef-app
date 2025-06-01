@@ -53,7 +53,7 @@ model Locale {
 }
 
 model TranslationKey {
-  id               String        @id @default(uuid())        @map("id")
+  id               String        @id @default(cuid())        @map("id")
   keyPath          String        @unique                     @map("key_path")
   isGroupHeader    Boolean       @default(false)             @map("is_group_header")
   createdAt        DateTime      @default(now())             @map("created_at")

@@ -10,12 +10,14 @@ export const updateTranslation = (payload: { id: string; locale: string; value: 
   fetchPUT<void, { id: string; locale: string; value: string }>('/translation', payload)
 
 export const addTranslation = (payload: {
+  projectId: string
   fullKey: string
   values: { [locales: string]: string | null }
 }) =>
-  fetchPOST<void, { fullKey: string; values: { [locales: string]: string | null } }>(
-    '/translation',
-    payload
-  )
+  fetchPOST<
+    void,
+    { projectId: string; fullKey: string; values: { [locales: string]: string | null } }
+  >('/translation', payload)
 
-export const uploadFiles = (files: File[]) => fetchUpload<void>('/translations', files)
+export const uploadFiles = (payload: { projectId: string; files: File[] }) =>
+  fetchUpload<void>('/translations', payload)

@@ -38,9 +38,9 @@ export default function ProjectPageComponent({ id }: ProjectComponentProps) {
       translationEntries={translationEntries}
       onTranslationChange={onTranslationChange}
       isAddSubmitting={isAddSubmitting}
-      onAddTranslation={onAddTranslation}
+      onAddTranslation={(fullKey, values) => onAddTranslation(id, fullKey, values)}
       isFileUploadLoading={isFileUploadLoading}
-      onFileSelect={onFileSelect}
+      onFileSelect={files => onFileSelect({ projectId: id, files })}
       project={project}
     />
   )
